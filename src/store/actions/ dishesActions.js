@@ -12,8 +12,11 @@ export const fetchDishes = () => {
   return async (dispatch) => {
     try {
       dispatch(fetchDishesRequest());
-      await axiosApi('/dishes.json');
-      dispatch(fetchDishesSuccess());
+      const response = await axiosApi('/dishes.json');
+
+      if (response.data) {
+        dispatch(fetchDishesSuccess(response.data));
+      }
     } catch (e) {
       dispatch(fetchDishesFailure(e.message));
       throw e;
