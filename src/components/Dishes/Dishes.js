@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchDishes} from "../../store/actions/ dishesActions";
-import {addDish, increase} from "../../store/actions/cartActions";
+import {addDish, getTotalPrice, increase} from "../../store/actions/cartActions";
 
 const Dishes = () => {
   const dispatch = useDispatch();
@@ -21,8 +21,10 @@ const Dishes = () => {
 
     if (orderedDishes.some(orderedDish => dish.title === orderedDish.title)) {
       dispatch(increase(dish.title));
+      dispatch(getTotalPrice());
     } else {
       dispatch(addDish(dishToCart));
+      dispatch(getTotalPrice());
     }
   };
 

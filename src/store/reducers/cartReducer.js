@@ -1,7 +1,9 @@
-import {ADD_DISH_TO_CART, INCREASE, INIT_CART} from "../actions/cartActions";
+import {ADD_DISH_TO_CART, GET_TOTAL_PRICE, INCREASE, INIT_CART} from "../actions/cartActions";
+import {DELIVERY} from "../../constants";
 
 const initialState = {
   orderedDishes: [],
+  totalPrice: 0,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -9,7 +11,10 @@ const cartReducer = (state = initialState, action) => {
     case INIT_CART:
       return {...initialState};
     case ADD_DISH_TO_CART:
-      return {...state, orderedDishes: [...state.orderedDishes, action.payload]};
+      return {
+        ...state,
+        orderedDishes: [...state.orderedDishes, action.payload],
+      };
     case INCREASE:
       const orderedDishesCopy = state.orderedDishes.map(orderedDish => {
         if (orderedDish.title !== action.payload) {
@@ -22,7 +27,13 @@ const cartReducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        orderedDishes: orderedDishesCopy
+        orderedDishes: orderedDishesCopy,
+      };
+    case GET_TOTAL_PRICE:
+      return {
+        ...state,
+        totalPrice:
+          state.orderedDishes.reduce((acc, orderedDish) => acc + (orderedDish.price * orderedDish.amount), 0) + DELIVERY,
       };
     default:
       return state;
