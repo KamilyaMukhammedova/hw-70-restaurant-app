@@ -1,4 +1,4 @@
-import {ADD_DISH_TO_CART, GET_TOTAL_PRICE, INCREASE, INIT_CART} from "../actions/cartActions";
+import {ADD_DISH_TO_CART, GET_TOTAL_PRICE, INCREASE, INIT_CART, REMOVE_DISH_FROM_CART} from "../actions/cartActions";
 import {DELIVERY} from "../../constants";
 
 const initialState = {
@@ -35,6 +35,11 @@ const cartReducer = (state = initialState, action) => {
         totalPrice:
           state.orderedDishes.reduce((acc, orderedDish) => acc + (orderedDish.price * orderedDish.amount), 0) + DELIVERY,
       };
+    case REMOVE_DISH_FROM_CART:
+      return {
+        ...state,
+        orderedDishes: state.orderedDishes.filter(orderedDish => orderedDish !== action.payload)
+      }
     default:
       return state;
   }
