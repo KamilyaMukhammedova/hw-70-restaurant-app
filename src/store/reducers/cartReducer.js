@@ -1,9 +1,17 @@
-import {ADD_DISH_TO_CART, GET_TOTAL_PRICE, INCREASE, INIT_CART, REMOVE_DISH_FROM_CART} from "../actions/cartActions";
+import {
+  ADD_DISH_TO_CART,
+  GET_TOTAL_PRICE,
+  INCREASE,
+  INIT_CART,
+  REMOVE_DISH_FROM_CART,
+  SET_PLACING_ORDER
+} from "../actions/cartActions";
 import {DELIVERY} from "../../constants";
 
 const initialState = {
   orderedDishes: [],
   totalPrice: 0,
+  placingOrder: false,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -22,7 +30,7 @@ const cartReducer = (state = initialState, action) => {
         }
         return {
           ...orderedDish,
-          amount: orderedDish.amount + 1
+          amount: orderedDish.amount + 1,
         };
       });
       return {
@@ -38,8 +46,13 @@ const cartReducer = (state = initialState, action) => {
     case REMOVE_DISH_FROM_CART:
       return {
         ...state,
-        orderedDishes: state.orderedDishes.filter(orderedDish => orderedDish !== action.payload)
-      }
+        orderedDishes: state.orderedDishes.filter(orderedDish => orderedDish !== action.payload),
+      };
+    case SET_PLACING_ORDER:
+      return {
+        ...state,
+        placingOrder: action.payload,
+      };
     default:
       return state;
   }
