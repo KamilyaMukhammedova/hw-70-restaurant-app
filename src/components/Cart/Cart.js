@@ -30,44 +30,56 @@ const Cart = () => {
 
   return (
     <>
-      <Modal
-        show={placingOrder}
-        closed={() => onClosePlacingOrder()}
-      >
-        <OrderForm/>
-      </Modal>
-      <div className="border p-3">
-        {orderedDishes.map(orderedDish => (
-          <div className="row justify-content-between mb-3 align-items-center" key={orderedDish.title}>
-            <p className="col-4">{orderedDish.title}</p>
-            <p>x{orderedDish.amount}</p>
-            <p>{orderedDish.price}</p>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => removeDish(orderedDish)}
+      {
+        orderedDishes.length === 0 ?
+          <p className="border p-3">Cart is empty</p>
+          :
+          <>
+            <Modal
+              show={placingOrder}
+              closed={() => onClosePlacingOrder()}
             >
-              Remove
-            </button>
-          </div>
-        ))}
-        <div>--------------</div>
-        <div className="row justify-content-between">
-          <p>Delivery</p>
-          <p>{DELIVERY}</p>
-        </div>
-        <div className="row justify-content-between">
-          <p><strong>Total</strong></p>
-          <p>{totalPrice}</p>
-        </div>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => onOpenPlacingOrder()}
-        >
-          Place order
-        </button>
-      </div>
+              <OrderForm/>
+            </Modal>
+            <div className="border p-3">
+              {orderedDishes.map(orderedDish => (
+                <div
+                  className="row justify-content-between mb-3 align-items-start pr-3 pl-3"
+                  key={orderedDish.title}
+                >
+                  <p className="col-3">{orderedDish.title}</p>
+                  <p>x{orderedDish.amount}</p>
+                  <p>{orderedDish.price}</p>
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => removeDish(orderedDish)}
+                  >
+                    <i className="bi bi-basket"/>
+                  </button>
+                </div>
+              ))}
+              <p style={{height: '2px', backgroundColor: '#cccccc'}}/>
+              <div className="row justify-content-between pr-3 pl-3">
+                <p>Delivery</p>
+                <p>{DELIVERY}</p>
+              </div>
+              <div className="row justify-content-between pr-3 pl-3">
+                <p><strong>Total</strong></p>
+                <p>{totalPrice}</p>
+              </div>
+              <div className="text-center">
+                <button
+                  type="button"
+                  className="btn btn-outline-info"
+                  onClick={() => onOpenPlacingOrder()}
+                >
+                  Place order
+                </button>
+              </div>
+            </div>
+          </>
+      }
     </>
   );
 };

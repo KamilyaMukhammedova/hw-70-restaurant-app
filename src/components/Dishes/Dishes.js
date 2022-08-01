@@ -6,6 +6,7 @@ import {addDish, getTotalPrice, increase} from "../../store/actions/cartActions"
 const Dishes = () => {
   const dispatch = useDispatch();
   const dishes = useSelector(state => state.dishes.dishes);
+  const loading = useSelector(state => state.dishes.loading);
   const orderedDishes = useSelector(state => state.cart.orderedDishes);
 
   useEffect(() => {
@@ -28,32 +29,49 @@ const Dishes = () => {
     }
   };
 
-  return dishes && (
-    <div className="border p-5">
-      {Object.keys(dishes).map(dish => (
-        <div
-          className="border p-3 row mb-3 justify-content-between align-items-center"
-          key={dish}
-        >
-          <div>
-            <img src={dishes[dish].image} alt={dishes[dish].title} style={{width: '100px', height: '70px'}}/>
-          </div>
-          <div className="column col-5">
-            <div>{dishes[dish].title}</div>
-            <div><strong>KGS {dishes[dish].price}</strong></div>
-          </div>
-          <div>
-            <button
-              type="button"
-              className="btn btn-success"
-              onClick={() => addDishToCart(dishes[dish])}
-            >
-              Add to cart
-            </button>
-          </div>
+  return (
+    <>
+      {
+        (loading && dishes === null) &&
+        <div className="spinner-border text-light" role="status">
+          <span className="sr-only">Loading...</span>
         </div>
-      ))}
-    </div>
+      }
+      {
+        (dishes && !loading) &&
+        <div className="border p-5">
+          {Object.keys(dishes).map(dish => (
+            <div
+              className="p-3 row mb-3 justify-content-between align-items-center"
+              key={dish}
+              style={{backgroundColor: '#303434'}}
+            >
+              <div>
+                <img
+                  src={dishes[dish].image}
+                  alt={dishes[dish].title}
+                  style={{width: '100px', height: '70px'}}
+                />
+              </div>
+              <div className="column col-5">
+                <div>{dishes[dish].title}</div>
+                <div><strong>KGS {dishes[dish].price}</strong></div>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-outline-light"
+                  onClick={() => addDishToCart(dishes[dish])}
+                >
+                  <i className="bi bi-cart4 mr-1"/>
+                  Add to cart
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      }
+    </>
   );
 };
 

@@ -47,58 +47,68 @@ const OrderForm = () => {
   };
 
   return (
-    <div>
-      <h3>Enter your contact data</h3>
-      <form onSubmit={(e) => onSubmitForm(e)}>
-        <div className="form-group row align-items-center">
-          <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
-          <div className="col-sm-10">
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              value={userData.name}
-              onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
-            />
+    <>
+      <div className="text-right">
+        <button
+          type="button"
+          className="btn btn-outline-dark"
+          onClick={() => onCloseHandler()}
+        >
+          <i className="bi bi-x-circle-fill"/>
+        </button>
+      </div>
+      <div className='p-3'>
+        <h3 className="text-center mb-3">Enter your contact data</h3>
+        <form onSubmit={(e) => onSubmitForm(e)}>
+          <div className="form-group row align-items-center">
+            <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
+            <div className="col-sm-10">
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                value={userData.name}
+                onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
+              />
+            </div>
           </div>
-        </div>
-        <div className="form-group row align-items-center">
-          <label htmlFor="email" className="col-sm-2 col-form-label">E-mail</label>
-          <div className="col-sm-10">
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              value={userData.email}
-              onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
-            />
+          <div className="form-group row align-items-center">
+            <label htmlFor="email" className="col-sm-2 col-form-label">E-mail</label>
+            <div className="col-sm-10">
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={userData.email}
+                onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
+              />
+            </div>
           </div>
-        </div>
-        <div className="form-group row align-items-center">
-          <label htmlFor="phoneNumber" className="col-sm-2 col-form-label">Phone number</label>
-          <div className="col-sm-10">
-            <input
-              type="text"
-              className="form-control"
-              id="phoneNumber"
-              name="phoneNumber"
-              value={userData.phoneNumber}
-              onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
-            />
+          <div className="form-group row align-items-center">
+            <label htmlFor="phoneNumber" className="col-sm-2 col-form-label">Phone number</label>
+            <div className="col-sm-10">
+              <input
+                type="text"
+                className="form-control"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={userData.phoneNumber}
+                onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
+              />
+            </div>
           </div>
-        </div>
-        <button type="submit" className="btn btn-success">Add order</button>
-      </form>
-      <button
-        type="button"
-        className="btn btn-danger"
-        onClick={() => onCloseHandler()}
-      >
-        Close
-      </button>
-    </div>
+          <button
+            type="submit"
+            className="btn btn-outline-info w-100"
+            disabled={userData.name === '' || userData.email === '' || userData.phoneNumber === ''}
+          >
+            Add order
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

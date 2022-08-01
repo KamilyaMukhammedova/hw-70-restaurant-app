@@ -26,8 +26,11 @@ export const createOrder = (orderData) => {
       dispatch(createOrderRequest());
       await axiosApi.post('/orders.json', orderData);
       dispatch(createOrderSuccess());
+      alert('Your order was successful placed!');
+      dispatch(setPlacingOrder(false));
     } catch (e) {
       dispatch(createOrderFailure(e.message));
+      alert(e.message);
       throw e.message;
     }
   };
