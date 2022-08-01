@@ -1,5 +1,8 @@
 import {
   ADD_DISH_TO_CART,
+  CREATE_ORDER_FAILURE,
+  CREATE_ORDER_REQUEST,
+  CREATE_ORDER_SUCCESS,
   GET_TOTAL_PRICE,
   INCREASE,
   INIT_CART,
@@ -12,6 +15,8 @@ const initialState = {
   orderedDishes: [],
   totalPrice: 0,
   placingOrder: false,
+  createOrderLoading: false,
+  createOrderError: null,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -49,10 +54,13 @@ const cartReducer = (state = initialState, action) => {
         orderedDishes: state.orderedDishes.filter(orderedDish => orderedDish !== action.payload),
       };
     case SET_PLACING_ORDER:
-      return {
-        ...state,
-        placingOrder: action.payload,
-      };
+      return {...state, placingOrder: action.payload};
+    case CREATE_ORDER_REQUEST:
+      return {...state, createOrderLoading: true, createOrderError: null};
+    case CREATE_ORDER_SUCCESS:
+      return {...state, createOrderLoading: false, createOrderError: null};
+    case CREATE_ORDER_FAILURE:
+      return {...state, createOrderLoading: false, createOrderError: action.payload};
     default:
       return state;
   }

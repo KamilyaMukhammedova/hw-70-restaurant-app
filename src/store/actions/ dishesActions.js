@@ -19,7 +19,7 @@ export const fetchDishes = () => {
       }
     } catch (e) {
       dispatch(fetchDishesFailure(e.message));
-      throw e;
+      throw e.message;
     }
   };
 };

@@ -34,7 +34,7 @@ const Cart = () => {
         show={placingOrder}
         closed={() => onClosePlacingOrder()}
       >
-        <OrderForm close={onClosePlacingOrder}/>
+        <OrderForm/>
       </Modal>
       <div className="border p-3">
         {orderedDishes.map(orderedDish => (
